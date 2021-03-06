@@ -2,6 +2,7 @@ package com.mhsoft.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,7 +37,11 @@ public class CMController {
 	}
 	
 	@RequestMapping("/admin/login.do")
-	public ModelAndView loginDo() {
+	public ModelAndView loginDo(@RequestParam("m_id") String id,
+								@RequestParam("m_pw") String pw) 
+	{
+		System.out.println("+++++++++++++ID:" + id + "/" + "PW:" + pw);
+		boolean bResult = m_service.doLogin(id, pw);
 		ModelAndView view = new ModelAndView();
 		view.setViewName("admin/login");
 		return view;

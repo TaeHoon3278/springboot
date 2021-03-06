@@ -15,4 +15,10 @@ public class MemberServiceImpl implements MemberService{
 	public String getServerTime() {
 		return m_dao.getServerTime();
 	}
+
+	@Override
+	public boolean doLogin(String id, String pw) {
+		// TODO Auto-generated method stub
+		return m_dao.doLogin(id, pw);
+	}
 }

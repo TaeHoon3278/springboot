@@ -16,4 +16,8 @@ public class MemberDao {
 		// TODO Auto-generated method stub
 		return m_session.selectOne(NAMESPACE+"getServerTime");
 	}
+
+	public boolean doLogin(String id, String pw) {
+		return true;
+	}
 }
