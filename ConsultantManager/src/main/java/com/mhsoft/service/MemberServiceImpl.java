@@ -1,9 +1,13 @@
 package com.mhsoft.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mhsoft.dao.MemberDao;
+import com.mhsoft.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -17,7 +21,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public boolean doLogin(String id, String pw) {
+	public List<Map<String, String>> doLogin(String id, String pw) {
 		// TODO Auto-generated method stub
 		return m_dao.doLogin(id, pw);
 	}

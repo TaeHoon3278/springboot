@@ -7,4 +7,18 @@
 	<select id="getServerTime" resultType="string">
 		SELECT now()
 	</select>
+	
+	<select id="doLogin" parameterType="map" resultMap="getMemberInfoList">
+		SELECT m_id, m_pw, m_name
+		FROM MemberInfo
+		WHERE m_id=#{id}
+		AND m_pw=password(#{pw})
+		
+	</select>
+	
+	<resultMap type="map" id="getMemberInfoList">
+	    <result column="m_id"	   		property="m_id"/>
+        <result column="m_pw"	   		property="m_pw"/>
+        <result column="m_name"     	property="m_name"/>
+    </resultMap>
 </mapper>
