@@ -1,0 +1,5 @@
+spring.datasource.hikari.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.hikari.jdbc-url=jdbc:mysql://52.231.11.11:13306/mhdb?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+spring.datasource.hikari.username=root
+spring.datasource.hikari.password=3278
+spring.datasource.hikari.connection-test-query=SELECT 1

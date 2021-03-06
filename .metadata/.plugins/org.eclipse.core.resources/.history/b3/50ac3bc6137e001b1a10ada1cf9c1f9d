@@ -1,0 +1,17 @@
+package com.mhsoft.web;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+@RestController
+public class CMController {
+
+	@RequestMapping("/")
+	public ModelAndView hello() {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("main/test");
+		return view;
+	}
+	
+}
