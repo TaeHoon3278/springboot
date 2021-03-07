@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mhsoft.service.MemberService;
+import com.mhsoft.vo.MemberVO;
 
 @RestController
 public class CMController {
@@ -24,6 +25,16 @@ public class CMController {
 
 	@Autowired
 	MemberService m_service;
+	
+	@RequestMapping("/index")
+	public ModelAndView index(HttpServletRequest req) 
+	{
+		HttpSession session = req.getSession();
+		ModelAndView view = new ModelAndView();
+		view.setViewName("index");
+		return view;
+	}
+	
 	
 	@RequestMapping("/")
 	public ModelAndView main(HttpServletRequest req) 
@@ -70,7 +81,7 @@ public class CMController {
 	{
 		ModelAndView view = new ModelAndView();
 		HttpSession session = req.getSession();
-		session.removeAttribute("member");
+		session.invalidate();
 		view.setViewName("redirect:/admin/login");
 		return view;
 	}
@@ -80,21 +91,23 @@ public class CMController {
 								@RequestParam(value="m_pw", required=false, defaultValue="") String pw,
 								HttpServletRequest req, RedirectAttributes redirect) 
 	{
-		List<Map<String, String>> result = m_service.doLogin(id, pw);
+		List<MemberVO> result = m_service.doLogin(id, pw);
 		ModelAndView view = new ModelAndView();
 		HttpSession session = req.getSession();
 		session.setMaxInactiveInterval(1800);
 		
 		if(session.getAttribute("member")!=null)
 		{
-			session.setAttribute("member", result.get(0).get("m_name"));
-			logger.info("ID:" + result.get(0).get("m_id"));
+			session.setAttribute("member", result.get(0).getM_name());
+			session.setAttribute("member_lv", result.get(0).getM_level());
+			logger.info("[MHL0001]login.do-> ID:" + result.get(0).getM_id());
 			view.setViewName("redirect:/");
 		}
 		else if(result!=null && result.size()!=0)
 		{
-			session.setAttribute("member", result.get(0).get("m_name"));
-			logger.info("ID:" + result.get(0).get("m_id"));
+			session.setAttribute("member", result.get(0).getM_name());
+			session.setAttribute("member_lv", result.get(0).getM_level());
+			logger.info("ID:" + result.get(0).getM_id());
 			view.setViewName("redirect:/");
 		}
 		else

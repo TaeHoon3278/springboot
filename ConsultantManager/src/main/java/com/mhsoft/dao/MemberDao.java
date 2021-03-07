@@ -29,13 +29,13 @@ public class MemberDao {
 		return m_session.selectOne(NAMESPACE+"getServerTime");
 	}
 
-	public List<Map<String, String>> doLogin(String id, String pw) {
+	public List<MemberVO> doLogin(String id, String pw) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
 		map.put("pw", pw);
 		
-		List<Map<String, String>> list = (List)m_session.selectList(NAMESPACE+"doLogin", map);
+		List<MemberVO> list = m_session.selectList(NAMESPACE+"doLogin", map);
 		return list;
 	}
 }

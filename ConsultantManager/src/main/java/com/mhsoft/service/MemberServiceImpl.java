@@ -21,7 +21,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<Map<String, String>> doLogin(String id, String pw) {
+	public List<MemberVO> doLogin(String id, String pw) {
 		// TODO Auto-generated method stub
 		return m_dao.doLogin(id, pw);
 	}
