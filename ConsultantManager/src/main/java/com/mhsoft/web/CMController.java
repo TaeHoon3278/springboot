@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mhsoft.attr.LoginAttribute;
 import com.mhsoft.service.MemberService;
 import com.mhsoft.vo.MemberVO;
+import com.mhsoft.attr.LoginAttribute;
 
 @RestController
 public class CMController {
@@ -25,33 +27,7 @@ public class CMController {
 
 	@Autowired
 	MemberService m_service;
-	
-	@RequestMapping("/index")
-	public ModelAndView index(HttpServletRequest req) 
-	{
-		HttpSession session = req.getSession();
-		ModelAndView view = new ModelAndView();
-		view.setViewName("index");
-		return view;
-	}
-	
-	
-	@RequestMapping("/")
-	public ModelAndView main(HttpServletRequest req) 
-	{
-		HttpSession session = req.getSession();
-		ModelAndView view = new ModelAndView();
-		if(session.getAttribute("member")==null)
-		{
-			view.setViewName("redirect:/admin/login");
-		}
-		else
-		{
-			view.setViewName("main");
-		}
-		return view;
-	}
-	
+		
 	@RequestMapping("/server-time")
 	public String serverTime() {
 		return m_service.getServerTime();
@@ -64,9 +40,9 @@ public class CMController {
 	public ModelAndView login(HttpServletRequest req) {
 		ModelAndView view = new ModelAndView();
 		HttpSession session = req.getSession();
-		if(session.getAttribute("member")!=null)
+		if(session.getAttribute(LoginAttribute.ATTR_LOGIN_ID)!=null)
 		{
-			view.setViewName("redirect:/");
+			view.setViewName("redirect:/admin/main");
 		}
 		else
 		{
@@ -75,7 +51,12 @@ public class CMController {
 		}
 		return view;
 	}
-	
+	/**
+	 * 로그아웃 페이지
+	 * @param req
+	 * @param redirect
+	 * @return
+	 */
 	@RequestMapping("/admin/logout.do")
 	public ModelAndView logoutDo(HttpServletRequest req, RedirectAttributes redirect)
 	{
@@ -91,34 +72,37 @@ public class CMController {
 								@RequestParam(value="m_pw", required=false, defaultValue="") String pw,
 								HttpServletRequest req, RedirectAttributes redirect) 
 	{
-		List<MemberVO> result = m_service.doLogin(id, pw);
-		ModelAndView view = new ModelAndView();
 		HttpSession session = req.getSession();
-		session.setMaxInactiveInterval(1800);
-		
-		if(session.getAttribute("member")!=null)
+		ModelAndView view = new ModelAndView();
+		MemberVO result = m_service.doLogin(id, pw);
+		if(null == result)
 		{
-			session.setAttribute("member", result.get(0).getM_name());
-			session.setAttribute("member_lv", result.get(0).getM_level());
-			logger.info("[MHL0001]login.do-> ID:" + result.get(0).getM_id());
-			view.setViewName("redirect:/");
-		}
-		else if(result!=null && result.size()!=0)
-		{
-			session.setAttribute("member", result.get(0).getM_name());
-			session.setAttribute("member_lv", result.get(0).getM_level());
-			logger.info("ID:" + result.get(0).getM_id());
-			view.setViewName("redirect:/");
+			logger.info("[MHL0002]Login fail. NULL error");
+			view.setViewName("admin/invalid");
+
+			return view;
 		}
 		else
 		{
-			view.setViewName("redirect:/admin/invalid");
+			logger.info("[MHL0002]Login Success.");
+			session.setAttribute(LoginAttribute.ATTR_LOGIN_ID, result);
+			session.setMaxInactiveInterval(1800);
+			view.setViewName("redirect:/admin/main");
+
 		}
+		
+		
+		
+		logger.info("[MHL0000]result-> ID:" + result.getM_id());
+		
 		return view;
 	}
 	
 	
-	
+	/**
+	 * 유효하지 않은 페이지
+	 * @return
+	 */
 	@RequestMapping("/admin/invalid")
 	public ModelAndView error() 
 	{
@@ -126,4 +110,19 @@ public class CMController {
 		view.setViewName("admin/invalid");
 		return view;
 	}
+	
+	
+	/**
+	 * 메인페이지
+	 * @return
+	 */
+	@RequestMapping("/admin/main")
+	public ModelAndView main()
+	{
+		ModelAndView view = new ModelAndView();
+		view.setViewName("index");
+		return view;
+		
+	}
+	
 }

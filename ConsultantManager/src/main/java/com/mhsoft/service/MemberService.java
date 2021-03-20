@@ -7,5 +7,5 @@ import com.mhsoft.vo.MemberVO;
 
 public interface MemberService {
 	public String getServerTime();
-	public List<MemberVO> doLogin(String id, String pw);
+	public MemberVO doLogin(String id, String pw);
 }
