@@ -1,11 +1,18 @@
 package com.mhsoft.vo;
 
 public class MemberVO {
+	private int m_no;
 	private String m_id;
 	private String m_pw;
 	private String m_name;
 	private String m_level;
 	
+	public int getM_no() {
+		return m_no;
+	}
+	public void setM_no(int m_no) {
+		this.m_no = m_no;
+	}
 	public String getM_id() {
 		return m_id;
 	}

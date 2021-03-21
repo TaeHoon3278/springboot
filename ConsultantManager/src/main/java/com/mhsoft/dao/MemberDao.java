@@ -38,4 +38,10 @@ public class MemberDao {
 		MemberVO list = m_session.selectOne(NAMESPACE+"doLogin", map);
 		return list;
 	}
+
+	public List<MemberVO> getAdminList() {
+		List<MemberVO> list = m_session.selectList(NAMESPACE + "getAdminList");
+		logger.info("[MHDAO0001]list:" + list.toString());
+		return list;
+	}
 }

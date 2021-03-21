@@ -84,7 +84,7 @@ public class CMController {
 		}
 		else
 		{
-			logger.info("[MHL0002]Login Success.");
+			logger.info("[MHL0001]Login Success.");
 			session.setAttribute(LoginAttribute.ATTR_LOGIN_ID, result);
 			session.setMaxInactiveInterval(1800);
 			view.setViewName("redirect:/admin/main");
@@ -120,7 +120,10 @@ public class CMController {
 	public ModelAndView main()
 	{
 		ModelAndView view = new ModelAndView();
+		//관리자 정보를 가져온다.
+		List<MemberVO> list = m_service.getAdminList();
 		view.setViewName("index");
+		view.addObject("listVO", list);
 		return view;
 		
 	}

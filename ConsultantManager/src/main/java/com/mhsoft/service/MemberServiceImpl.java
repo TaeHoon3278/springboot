@@ -25,4 +25,10 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return m_dao.doLogin(id, pw);
 	}
+
+	@Override
+	public List<MemberVO> getAdminList() {
+		// TODO Auto-generated method stub
+		return m_dao.getAdminList();
+	}
 }

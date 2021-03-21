@@ -10,11 +10,30 @@
 	</select>
 	
 	<select id="doLogin" parameterType="map" resultType="com.mhsoft.vo.MemberVO">
-		SELECT m_id, m_pw, m_name, m_level
+		SELECT m_no, m_id, m_pw, m_name, m_level
 		FROM MemberInfo
 		WHERE m_id=#{id}
 		AND m_pw=password(#{pw})
 		
+	</select>
+	<resultMap type="com.mhsoft.vo.MemberVO" id="getAdminListByMap">
+		<id	property="m_no" column="m_no"/>
+		<result	property="m_id" column="m_id"/>
+		<result property="m_name" column="m_name"/>
+		<result property="m_level" column="m_level"/>
+	</resultMap>
+	
+	
+	
+	<select id="getAdminList"
+			parameterType="map"
+			resultMap="getAdminListByMap">
+		SELECT 
+				m_no
+				, m_id
+				, m_name
+				, m_level
+		FROM	MemberInfo
 	</select>
 	
 	

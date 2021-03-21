@@ -14,12 +14,13 @@ public class SessionListener implements HttpSessionListener {
 	
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-    	
+    	logger.info("[MHSS0001]Created session");
+
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-    	logger.info("[MHSS0001]Destroyed session");
+    	logger.info("[MHSS0002]Destroyed session");
     	
     }
 
