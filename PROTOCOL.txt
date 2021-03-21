@@ -1,0 +1,12 @@
+1.로그인 인터텝터
+[MHLI0001]Login is empty
+[MHLI0002]Login is not empty
+
+2.로그인 성공 여부
+[MHL0000]아이디 로그인 정보
+[MHL0001]Login Success
+[MHL0002]Login fail, NULL error
+
+3.세션 생성 및 소멸 여부
+[MHSS0001]Created session
+[MHSS0002]Destroyed session
